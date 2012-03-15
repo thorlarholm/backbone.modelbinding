@@ -206,6 +206,14 @@ var modelbinding = (function(Backbone, _, $) {
             setModelValue(attribute_name, elVal);
           }
         }
+
+        // respond to server-fetched change events
+        model.on("change", function() {
+            if (model.hasChanged(attribute_name)) {
+                model.trigger("change:" + attribute_name, model, model.get(attribute_name));
+            }
+        });
+
       });
     };
 
